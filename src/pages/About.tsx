@@ -1,6 +1,6 @@
 import { useState, type ChangeEvent } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { phoneApi } from "../api";
+import { api2 } from "../api";
 
 interface Phone {
   id?: number;
@@ -25,18 +25,18 @@ export default function About() {
   const { data: phones = [] } = useQuery<Phone[]>({
     queryKey: ["phones"],
     queryFn: async () => {
-      const res = await phoneApi.get("/");
+      const res = await api2.get("/");
       return res.data;
     }
   });
 
   const addPhone = useMutation({
-    mutationFn: (newPhone: Phone) => phoneApi.post("/", newPhone),
+    mutationFn: (newPhone: Phone) => api2.post("/", newPhone),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["phones"] })
   });
 
   const deletePhone = useMutation({
-    mutationFn: (id: number) => phoneApi.delete(`/${id}`),
+    mutationFn: (id: number) => api2.delete(`/${id}`),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["phones"] })
   });
 

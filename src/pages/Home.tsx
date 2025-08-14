@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { countryApi } from "../api";
+import { api } from "../api";
 
 interface Country {
   id: string;
@@ -19,18 +19,18 @@ export default function Home() {
   });
 
   const getData = async () => {
-    const res = await countryApi.get("/");
+    const res = await api.get("/");
     setData(res.data);
   };
 
   const addData = async () => {
-    await countryApi.post("/", form);
+    await api.post("/", form);
     setForm({ name: "", capital: "", population: "", area: "" });
     getData();
   };
 
   const deleteData = async (id: string) => {
-    await countryApi.delete(`/${id}`);
+    await api.delete(`/${id}`);
     getData();
   };
 
